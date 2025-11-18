@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -15,9 +17,11 @@ const steps = [
   { number: 5, label: '최종 확인' },
 ];
 
-export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicatorProps) {
+export function ProgressIndicator({
+  currentStep,
+  onStepClick,
+}: ProgressIndicatorProps) {
   const handleStepClick = (stepNumber: number) => {
-    // 디버깅 모드: 모든 단계 클릭 가능
     if (onStepClick) {
       onStepClick(stepNumber);
     }
@@ -28,7 +32,6 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
           <React.Fragment key={step.number}>
-            {/* Step Circle */}
             <div className="flex flex-col items-center gap-2">
               <div
                 className={cn(
@@ -37,11 +40,8 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
                     'bg-primary text-primary-foreground',
                   step.number === currentStep &&
                     'bg-primary text-primary-foreground ring-4 ring-primary/20',
-                  step.number > currentStep &&
-                    'bg-muted text-muted-foreground',
-                  // 모든 단계 클릭 가능 (디버깅 모드)
-                  onStepClick &&
-                    'cursor-pointer hover:scale-110'
+                  step.number > currentStep && 'bg-muted text-muted-foreground',
+                  onStepClick && 'cursor-pointer hover:scale-110'
                 )}
                 onClick={() => handleStepClick(step.number)}
               >
@@ -52,15 +52,13 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
                 )}
               </div>
 
-              {/* Step Label */}
               <span
                 className={cn(
                   'text-xs md:text-sm text-center whitespace-nowrap transition-colors',
                   step.number <= currentStep
                     ? 'text-foreground font-medium'
                     : 'text-muted-foreground',
-                  onStepClick &&
-                    'cursor-pointer'
+                  onStepClick && 'cursor-pointer'
                 )}
                 onClick={() => handleStepClick(step.number)}
               >
@@ -68,14 +66,11 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
               </span>
             </div>
 
-            {/* Connector Line */}
             {index < steps.length - 1 && (
               <div
                 className={cn(
                   'h-[2px] flex-1 mx-2 transition-colors',
-                  step.number < currentStep
-                    ? 'bg-primary'
-                    : 'bg-muted'
+                  step.number < currentStep ? 'bg-primary' : 'bg-muted'
                 )}
               />
             )}
@@ -85,3 +80,4 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
     </div>
   );
 }
+

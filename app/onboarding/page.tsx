@@ -6,20 +6,28 @@ import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { Step1GuardianInfo } from '@/components/onboarding/Step1GuardianInfo';
 import { Step2ElderInfo } from '@/components/onboarding/Step2ElderInfo';
 import { Step3CallSettings } from '@/components/onboarding/Step3CallSettings';
-import Step4CallContent from '@/components/onboarding/Step4CallContent';
-import Step5Confirmation from '@/components/onboarding/Step5Confirmation';
+import { Step4CallContent } from '@/components/onboarding/Step4CallContent';
+import { Step5Confirmation } from '@/components/onboarding/Step5Confirmation';
+import type {
+  OnboardingData,
+  GuardianInfoData,
+  ElderInfoData,
+  CallSettingsData,
+  CallContentData,
+  ConfirmationData,
+} from '@/types/onboarding';
 
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<OnboardingData>({});
 
-  const handleStep1Complete = (data: any) => {
+  const handleStep1Complete = (data: GuardianInfoData) => {
     console.log('Step 1 데이터:', data);
     setFormData({ ...formData, guardian: data });
     setCurrentStep(2);
   };
 
-  const handleStep2Complete = (data: any) => {
+  const handleStep2Complete = (data: ElderInfoData) => {
     console.log('Step 2 데이터:', data);
     setFormData({ ...formData, elder: data });
     setCurrentStep(3);
@@ -29,7 +37,7 @@ export default function OnboardingPage() {
     setCurrentStep(1);
   };
 
-  const handleStep3Complete = (data: any) => {
+  const handleStep3Complete = (data: CallSettingsData) => {
     console.log('Step 3 데이터:', data);
     setFormData({ ...formData, callSettings: data });
     setCurrentStep(4);
@@ -39,7 +47,7 @@ export default function OnboardingPage() {
     setCurrentStep(2);
   };
 
-  const handleStep4Complete = (data: any) => {
+  const handleStep4Complete = (data: CallContentData) => {
     console.log('Step 4 데이터:', data);
     setFormData({ ...formData, callContent: data });
     setCurrentStep(5);
@@ -49,7 +57,7 @@ export default function OnboardingPage() {
     setCurrentStep(3);
   };
 
-  const handleStep5Submit = (data: any) => {
+  const handleStep5Submit = (data: ConfirmationData) => {
     console.log('Step 5 제출:', data);
     console.log('전체 폼 데이터:', { ...formData, consent: data });
     // TODO: API 제출 로직 추가
@@ -64,24 +72,34 @@ export default function OnboardingPage() {
   };
 
   const handleStepClick = (step: number) => {
-    // 디버깅용: 단계 클릭으로 이동
     setCurrentStep(step);
   };
 
   return (
     <OnboardingLayout>
-      <ProgressIndicator currentStep={currentStep} onStepClick={handleStepClick} />
+      <ProgressIndicator
+        currentStep={currentStep}
+        onStepClick={handleStepClick}
+      />
 
       {currentStep === 1 && (
         <Step1GuardianInfo onNext={handleStep1Complete} />
       )}
 
       {currentStep === 2 && (
-        <Step2ElderInfo onNext={handleStep2Complete} onPrev={handleStep2Prev} />
+        <Step2ElderInfo
+          onNext={handleStep2Complete}
+          onPrev={handleStep2Prev}
+          initialData={formData.elder}
+        />
       )}
 
       {currentStep === 3 && (
-        <Step3CallSettings onNext={handleStep3Complete} onPrev={handleStep3Prev} />
+        <Step3CallSettings
+          onNext={handleStep3Complete}
+          onPrev={handleStep3Prev}
+          initialData={formData.callSettings}
+        />
       )}
 
       {currentStep === 4 && (
