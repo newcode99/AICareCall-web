@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -11,66 +12,72 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { StepCard } from './StepCard';
-import { StepNavigation } from './StepNavigation';
-import type { StepProps, ElderInfoData, Gender, Relationship, LivingArrangement } from '@/types/onboarding';
-import { formatPhoneNumber } from '@/lib/onboarding-helpers';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { StepCard } from "./StepCard";
+import { StepNavigation } from "./StepNavigation";
+import type {
+  StepProps,
+  ElderInfoData,
+  Gender,
+  Relationship,
+  LivingArrangement,
+} from "@/types/onboarding";
+import { formatPhoneNumber } from "@/lib/onboarding-helpers";
 
 const formSchema = z
   .object({
     name: z
       .string()
-      .min(2, '이름은 최소 2자 이상이어야 합니다')
-      .max(20, '이름은 최대 20자까지 입력 가능합니다'),
-    gender: z.enum(['male', 'female']).refine((val) => val, {
-      message: '성별을 선택해주세요',
+      .min(2, "이름은 최소 2자 이상이어야 합니다")
+      .max(20, "이름은 최대 20자까지 입력 가능합니다"),
+    gender: z.enum(["male", "female"]).refine((val) => val, {
+      message: "성별을 선택해주세요",
     }),
     age: z
       .number()
-      .min(60, '60세 이상만 입력 가능합니다')
-      .max(120, '올바른 나이를 입력해주세요'),
+      .min(60, "60세 이상만 입력 가능합니다")
+      .max(120, "올바른 나이를 입력해주세요"),
     phone: z
       .string()
       .regex(
         /^010-\d{4}-\d{4}$/,
-        '올바른 전화번호 형식이 아닙니다 (010-0000-0000)'
+        "올바른 전화번호 형식이 아닙니다 (010-0000-0000)"
       ),
-    relationship: z.string().min(1, '관계를 선택해주세요'),
+    relationship: z.string().min(1, "관계를 선택해주세요"),
     relationshipOther: z.string().optional(),
     livingArrangement: z.string().optional(),
     livingArrangementOther: z.string().optional(),
     healthInfo: z
       .string()
-      .min(1, '건강 정보를 입력해주세요')
-      .max(500, '최대 500자까지 입력 가능합니다'),
+      .min(1, "건강 정보를 입력해주세요")
+      .max(500, "최대 500자까지 입력 가능합니다"),
   })
   .refine(
     (data) => {
-      if (data.relationship === 'other' && !data.relationshipOther?.trim()) {
+      if (data.relationship === "other" && !data.relationshipOther?.trim()) {
         return false;
       }
       return true;
     },
     {
-      message: '관계를 입력해주세요',
-      path: ['relationshipOther'],
+      message: "관계를 입력해주세요",
+      path: ["relationshipOther"],
     }
   )
   .refine(
     (data) => {
       if (
-        data.livingArrangement === 'other' &&
+        data.livingArrangement === "other" &&
         !data.livingArrangementOther?.trim()
       ) {
         return false;
@@ -78,8 +85,8 @@ const formSchema = z
       return true;
     },
     {
-      message: '거주 형태를 입력해주세요',
-      path: ['livingArrangementOther'],
+      message: "거주 형태를 입력해주세요",
+      path: ["livingArrangementOther"],
     }
   );
 
@@ -88,26 +95,66 @@ export function Step2ElderInfo({
   onPrev,
   initialData,
 }: StepProps<ElderInfoData>) {
+  const [showAgeError, setShowAgeError] = useState(false);
+  const [ageErrorMessage, setAgeErrorMessage] = useState("");
+
   const form = useForm<ElderInfoData>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: {
-      name: initialData?.name || '',
+      name: initialData?.name || "",
       gender: initialData?.gender || undefined,
-      age: initialData?.age || undefined,
-      phone: initialData?.phone || '',
-      relationship: initialData?.relationship || ('' as unknown as Relationship),
-      relationshipOther: initialData?.relationshipOther || '',
-      livingArrangement: initialData?.livingArrangement || ('' as unknown as LivingArrangement | undefined),
-      livingArrangementOther: initialData?.livingArrangementOther || '',
-      healthInfo: initialData?.healthInfo || '',
+      age: initialData?.age || ("" as any),
+      phone: initialData?.phone || "",
+      relationship:
+        initialData?.relationship || ("" as unknown as Relationship),
+      relationshipOther: initialData?.relationshipOther || "",
+      livingArrangement:
+        initialData?.livingArrangement ||
+        ("" as unknown as LivingArrangement | undefined),
+      livingArrangementOther: initialData?.livingArrangementOther || "",
+      healthInfo: initialData?.healthInfo || "",
     },
   });
 
-  const watchRelationship = form.watch('relationship');
-  const watchLivingArrangement = form.watch('livingArrangement');
-  const watchHealthInfo = form.watch('healthInfo');
+  const watchRelationship = form.watch("relationship");
+  const watchLivingArrangement = form.watch("livingArrangement");
+  const watchHealthInfo = form.watch("healthInfo");
+  const watchAge = form.watch("age");
 
   const isFormValid = form.formState.isValid;
+
+  // 나이 유효성 검사 (디바운스 1초)
+  useEffect(() => {
+    // 나이 입력 시작 시 즉시 에러 메시지 숨김
+    setShowAgeError(false);
+
+    const debounceTimer = setTimeout(() => {
+      // 빈 값이거나 undefined/null이면 검사하지 않음
+      if (!watchAge || String(watchAge).trim() === "") {
+        return;
+      }
+
+      const age = Number(watchAge);
+
+      if (isNaN(age) || age === 0) {
+        setAgeErrorMessage("올바른 나이를 입력해주세요");
+        setShowAgeError(true);
+        return;
+      }
+
+      if (age < 60) {
+        setAgeErrorMessage("60세 이상만 입력 가능합니다");
+        setShowAgeError(true);
+      } else if (age > 120) {
+        setAgeErrorMessage("올바른 나이를 입력해주세요");
+        setShowAgeError(true);
+      } else {
+        setShowAgeError(false);
+      }
+    }, 1000);
+
+    return () => clearTimeout(debounceTimer);
+  }, [watchAge]);
 
   const onSubmit = (data: ElderInfoData) => {
     onNext(data);
@@ -191,11 +238,31 @@ export function Step2ElderInfo({
                     <Input
                       type="number"
                       placeholder="예) 78"
-                      {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      value={
+                        field.value === undefined || field.value === null
+                          ? ""
+                          : field.value
+                      }
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        // 3자리 숫자만 허용
+                        if (value !== "" && value.length > 3) {
+                          return;
+                        }
+                        field.onChange(value === "" ? "" : Number(value));
+                      }}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      ref={field.ref}
+                      maxLength={3}
                     />
                   </FormControl>
                   <FormMessage />
+                  {showAgeError && (
+                    <p className="text-sm text-destructive mt-2">
+                      {ageErrorMessage}
+                    </p>
+                  )}
                 </FormItem>
               )}
             />
@@ -265,7 +332,7 @@ export function Step2ElderInfo({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    거주 형태{' '}
+                    거주 형태{" "}
                     <span className="text-muted-foreground">(선택)</span>
                   </FormLabel>
                   <Select
@@ -279,12 +346,8 @@ export function Step2ElderInfo({
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="alone">독거</SelectItem>
-                      <SelectItem value="with-spouse">
-                        배우자와 동거
-                      </SelectItem>
-                      <SelectItem value="with-children">
-                        자녀와 동거
-                      </SelectItem>
+                      <SelectItem value="with-spouse">배우자와 동거</SelectItem>
+                      <SelectItem value="with-children">자녀와 동거</SelectItem>
                       <SelectItem value="nursing-home">요양시설</SelectItem>
                       <SelectItem value="other">기타</SelectItem>
                     </SelectContent>
@@ -295,7 +358,7 @@ export function Step2ElderInfo({
             />
           </div>
 
-          {watchRelationship === 'other' && (
+          {watchRelationship === "other" && (
             <FormField
               control={form.control}
               name="relationshipOther"
@@ -311,7 +374,7 @@ export function Step2ElderInfo({
             />
           )}
 
-          {watchLivingArrangement === 'other' && (
+          {watchLivingArrangement === "other" && (
             <FormField
               control={form.control}
               name="livingArrangementOther"
