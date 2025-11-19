@@ -1,0 +1,15 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { SoriCharacter } from '@/app/components/SoriCharacter';
+export default function OnboardingV2Ch4() {
+  const router = useRouter();
+  const [agreed, setAgreed] = useState(false);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50 flex items-center justify-center p-6"><div className="max-w-4xl w-full"><div className="mb-8 text-center"><div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-rose-200 shadow-sm mb-4"><div className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse"></div><span className="text-sm font-bold text-slate-700">Version 2 • 카드형 레이아웃</span></div><div className="flex justify-center gap-2 mb-4">{[1, 2, 3, 4].map((num) => <div key={num} className="h-2 w-16 rounded-full bg-gradient-to-r from-rose-600 to-pink-600"></div>)}</div><div className="flex items-center justify-center gap-4 mb-6"><SoriCharacter size={60} animated /><h1 className="text-3xl font-black text-slate-900">완료!</h1></div><p className="text-base font-medium text-slate-600">소리가 곧 전화드릴게요</p></div>
+      <div className="p-10 rounded-3xl bg-white shadow-2xl border-2 border-rose-200 hover:border-rose-300 hover:shadow-rose-200/50 transition-all duration-300"><div className="space-y-6"><div className="p-6 rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200"><h3 className="text-sm font-bold text-slate-700 mb-4">입력하신 정보</h3><div className="space-y-3 text-sm">{['프로필', '건강 정보', '통화 설정'].map(item => <div key={item} className="flex justify-between"><span className="font-semibold text-slate-600">{item}</span><span className="font-bold text-slate-900">완료</span></div>)}</div></div>
+        <div className="p-6 rounded-2xl bg-blue-50 border-2 border-blue-200"><label className="flex items-start gap-3 cursor-pointer"><input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-1 w-5 h-5 rounded border-2 border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-500"/><span className="text-sm font-medium text-slate-700 leading-relaxed">개인정보 수집 및 이용에 동의하며, 소리가 안전하게 정보를 관리하는 것을 확인했습니다.</span></label></div></div></div>
+      <div className="flex gap-3 mt-8"><button onClick={() => router.push('/onboarding/chapter-3-v2')} className="h-14 px-8 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-200 transition-all duration-200 active:scale-95">이전</button><button onClick={() => router.push('/dashboard')} disabled={!agreed} className={`flex-1 h-14 rounded-xl font-bold text-base transition-all duration-200 ${agreed ? 'bg-gradient-to-r from-rose-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-40'}`}>{agreed ? '소리와 함께 시작하기 🎉' : '동의 후 시작'}</button></div></div>
+    </div>
+  );
+}

@@ -1,0 +1,20 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+export default function OnboardingV4Ch3() {
+  const router = useRouter();
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [callTime, setCallTime] = useState('10:00');
+  const days = ['월', '화', '수', '목', '금', '토', '일'];
+  const toggleDay = (day: string) => { setSelectedDays(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]); };
+  const isComplete = selectedDays.length > 0 && callTime;
+  const progress = ((selectedDays.length>0?1:0)+(callTime?1:0))/2*100;
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-green-50 flex items-center justify-center p-6"><div className="max-w-2xl w-full"><div className="mb-6"><div className="flex items-center justify-between mb-2"><span className="text-xs font-bold text-slate-600">진행 상황</span><span className="text-xs font-bold text-teal-600">{Math.round(progress)}%</span></div><div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-teal-600 to-emerald-600 transition-all duration-300" style={{width: `${progress}%`}}></div></div></div>
+      <div className="bg-white rounded-3xl shadow-2xl p-10 border-2 border-white/50"><div className="mb-8"><div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100 border border-teal-200 mb-4"><span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse" /><span className="text-xs font-bold text-teal-700 uppercase tracking-wide">Version 4 - Step 3/4</span></div><h1 className="text-3xl font-black text-slate-900 mb-2">통화 설정</h1><p className="text-base font-medium text-slate-600">편한 시간을 알려주세요</p></div>
+        <div className="space-y-6"><div className="p-6 rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50 border-2 border-teal-200"><h3 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"/></svg>통화 요일</h3><div className="flex gap-2">{days.map((day) => <button key={day} onClick={() => toggleDay(day)} className={`flex-1 h-11 rounded-xl font-bold text-sm transition-all duration-200 ${selectedDays.includes(day) ? 'bg-teal-600 text-white shadow-lg' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>{day}</button>)}</div></div>
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200"><h3 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/></svg>통화 시간</h3><input type="time" value={callTime} onChange={(e) => setCallTime(e.target.value)} className="w-full h-12 px-4 border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all text-sm font-medium"/></div></div>
+        <div className="flex gap-3 mt-8"><button onClick={() => router.push('/onboarding/chapter-2-v4')} className="h-12 px-6 rounded-xl border-2 border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all duration-200 active:scale-95">이전</button><button onClick={() => router.push('/onboarding/chapter-4-v4')} disabled={!isComplete} className={`flex-1 h-14 rounded-xl font-bold text-sm transition-all duration-200 ${isComplete ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-40'}`}>{isComplete ? '마지막 단계 →' : '시간을 선택해주세요'}</button></div></div></div>
+    </div>
+  );
+}
