@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LNB } from '@/app/components/LNB';
 import { CallListV2_Card } from '../components/CallListV2_Card';
@@ -11,8 +11,8 @@ import { callList } from '../shared/data';
 // Force dynamic rendering to use useSearchParams
 export const dynamic = 'force-dynamic';
 
-// 전체 통화 기록 페이지 - 여러 버전 지원
-export default function CallsPage() {
+// useSearchParams를 사용하는 컴포넌트를 분리
+function CallsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const viewMode = searchParams.get('view') || 'card';
@@ -86,6 +86,22 @@ export default function CallsPage() {
         <VersionSelector />
       </main>
     </div>
+  );
+}
+
+// 전체 통화 기록 페이지 - 여러 버전 지원
+export default function CallsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        <LNB />
+        <main className="flex-1 overflow-y-auto flex items-center justify-center">
+          <div className="text-slate-600">로딩 중...</div>
+        </main>
+      </div>
+    }>
+      <CallsContent />
+    </Suspense>
   );
 }
 
