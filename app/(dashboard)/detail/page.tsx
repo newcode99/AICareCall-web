@@ -62,8 +62,8 @@ function CallHistoryContent() {
     fetchCallList();
   }, [userId, elderId, currentPage]);
 
-  const handlePageChange = (page: number) => router.push(`/call-history?page=${page}`);
-  const handleCallClick = (call: any) => router.push(`/call-history/${call.id}`);
+  const handlePageChange = (page: number) => router.push(`/detail?page=${page}`);
+  const handleCallClick = (call: any) => router.push(`/detail/${call.id}`);
 
   return (
     <>

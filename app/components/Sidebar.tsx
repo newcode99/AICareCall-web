@@ -31,7 +31,7 @@ export function Sidebar({ className }: SidebarProps) {
             id: 'calls',
             label: '전체 통화 기록',
             icon: Phone,
-            path: '/call-history',
+            path: '/detail',
         },
         {
             id: 'chat',
@@ -71,7 +71,7 @@ export function Sidebar({ className }: SidebarProps) {
                 </div>
                 <div className="px-3 py-2">
                     <div className="space-y-2">
-                        {navItems.map((item) => {
+                        {navItems.filter(item => item.id !== 'settings').map((item) => {
                             const isActive = pathname === item.path || pathname?.startsWith(item.path + '/');
                             return (
                                 <Button
