@@ -8,7 +8,7 @@ interface CallRecord {
     date: string;
     time: string;
     duration: number;
-    status: 'success' | 'missed' | 'rejected';
+    status: 'success' | 'missed';
     summary: string;
     tags: string[];
     emotion: string;
@@ -27,7 +27,6 @@ export function TimelineCallList({ calls, onCallClick }: TimelineCallListProps) 
         switch (status) {
             case 'success': return 'bg-emerald-500 border-emerald-200 text-white';
             case 'missed': return 'bg-amber-500 border-amber-200 text-white';
-            case 'rejected': return 'bg-red-500 border-red-200 text-white';
             default: return 'bg-slate-300 border-slate-200 text-white';
         }
     };
@@ -44,12 +43,6 @@ export function TimelineCallList({ calls, onCallClick }: TimelineCallListProps) 
                 return (
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                );
-            case 'rejected':
-                return (
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 );
             default: return null;
@@ -71,9 +64,9 @@ export function TimelineCallList({ calls, onCallClick }: TimelineCallListProps) 
 
     const getEmotionTextColor = (emotion: string) => {
         switch (emotion) {
-            case '좋음': return 'text-emerald-700 bg-emerald-50 border-emerald-200';
-            case '보통': return 'text-blue-700 bg-blue-50 border-blue-200';
-            case '나쁨': return 'text-amber-700 bg-amber-50 border-amber-200';
+            case '좋음': return 'text-emerald-700 bg-gradient-to-r from-emerald-50 to-emerald-100 border-emerald-200';
+            case '보통': return 'text-blue-700 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200';
+            case '나쁨': return 'text-amber-700 bg-gradient-to-r from-amber-50 to-amber-100 border-amber-200';
             default: return 'text-slate-700 bg-slate-50 border-slate-200';
         }
     };
@@ -110,16 +103,16 @@ export function TimelineCallList({ calls, onCallClick }: TimelineCallListProps) 
                                             <span className="text-sm font-bold text-slate-900">{call.date}</span>
                                             <span className="text-xs font-medium text-slate-400">{call.time}</span>
                                             {call.status !== 'success' && (
-                                                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded text-white ${call.status === 'missed' ? 'bg-amber-500' : 'bg-red-500'}`}>
-                                                    {call.status === 'missed' ? '부재중' : '거절됨'}
+                                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded text-white bg-amber-500">
+                                                    부재중
                                                 </span>
                                             )}
                                         </div>
                                         <p className={`text-base font-bold text-slate-700 leading-relaxed mb-3 ${expandedId === call.id ? '' : 'line-clamp-1'}`}>
                                             {expandedId === call.id
                                                 ? call.summary
-                                                : call.summary.length > 50
-                                                    ? call.summary.substring(0, 50) + '...'
+                                                : call.summary.length > 28
+                                                    ? call.summary.substring(0, 28) + '...'
                                                     : call.summary
                                             }
                                         </p>
@@ -158,9 +151,6 @@ export function TimelineCallList({ calls, onCallClick }: TimelineCallListProps) 
                                 {/* Expanded Content */}
                                 <div className={`grid transition-all duration-500 ease-in-out ${expandedId === call.id ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'}`}>
                                     <div className="overflow-hidden">
-                                        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-600 leading-relaxed mb-4">
-                                            {call.summary}
-                                        </div>
 
                                         {/* Tags & Emotion in Expanded View */}
                                         <div className="flex items-center gap-2 flex-wrap mb-5">

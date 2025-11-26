@@ -48,10 +48,9 @@ export function getDaysDescription(days: number): string {
 /**
  * 백엔드 status 값을 프론트엔드 status로 변환
  */
-export function convertCallStatus(status: string): 'success' | 'missed' | 'rejected' {
+export function convertCallStatus(status: string): 'success' | 'missed' {
     if (status === 'completed') return 'success';
-    if (status === 'missed') return 'missed';
-    return 'rejected';
+    return 'missed';
 }
 
 /**

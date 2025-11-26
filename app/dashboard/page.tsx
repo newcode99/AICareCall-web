@@ -96,7 +96,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function initDashboard() {
       try {
-        const currentUserId = userId || 1;
+        const currentUserId = userId || 2;
         let currentElderId = elderId;
 
         if (!currentElderId) {
@@ -336,7 +336,7 @@ export default function Dashboard() {
                             <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 text-center border border-slate-200">
                               <p className="text-sm font-bold text-slate-700 mb-3">첫 통화가 완료되면 이곳에 실제 대화 내용이 표시됩니다</p>
                               <button
-                                onClick={() => router.push('/settings')}
+                                onClick={() => router.push('/onboarding')}
                                 className="px-6 py-2.5 bg-violet-600 hover:bg-violet-700 text-white text-sm font-bold rounded-lg transition-colors inline-flex items-center gap-2"
                               >
                                 통화 일정 설정하기 →
@@ -370,7 +370,7 @@ export default function Dashboard() {
                         </div>
                         <div className="px-6 pb-6">
                           <button
-                            onClick={() => router.push('/settings')}
+                            onClick={() => router.push('/onboarding')}
                             className="w-full py-3 rounded-lg bg-white text-violet-600 text-sm font-bold hover:bg-violet-50 transition-all border-2 border-violet-200 hover:border-violet-300 flex items-center justify-center gap-2"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -392,7 +392,7 @@ export default function Dashboard() {
                           <p className="text-base font-black text-slate-900 mb-3">예정된 통화가 없습니다</p>
                           <p className="text-sm font-semibold text-slate-600 mb-5">정기적인 안부 전화를 설정해보세요</p>
                           <button
-                            onClick={() => router.push('/settings')}
+                            onClick={() => router.push('/onboarding')}
                             className="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-sm font-bold text-white transition-all shadow-md flex items-center justify-center gap-2"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,7 +440,7 @@ export default function Dashboard() {
                             <p className="text-sm font-bold text-slate-700 mb-2">아직 설정된 일정이 없습니다</p>
                             <p className="text-xs text-slate-500 mb-4">규칙적인 소통이 더 따뜻한 케어를 만들어요</p>
                             <button
-                              onClick={() => router.push('/settings')}
+                              onClick={() => router.push('/onboarding')}
                               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors inline-flex items-center gap-1"
                             >
                               일정 추가하기 →
@@ -485,11 +485,12 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div >
+            </div >
           </>
-        )}
-      </SidebarInset>
+        )
+        }
+      </SidebarInset >
     </>
   );
 }
