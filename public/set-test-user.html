@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>테스트 사용자 설정</title>
+</head>
+
+<body>
+    <h1>테스트 데이터 설정</h1>
+    <p>LocalStorage에 테스트 사용자 정보를 저장합니다...</p>
+    <script>
+        localStorage.setItem('user-storage', JSON.stringify({
+            state: { userId: 2, elderId: 2 },
+            version: 0
+        }));
+        alert('✅ 설정 완료!\n\nuserId: 2\nelderId: 2\n\n이제 /dashboard로 이동합니다.');
+        window.location.href = '/dashboard';
+    </script>
+</body>
+
+</html>
