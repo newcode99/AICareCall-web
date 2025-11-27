@@ -77,7 +77,7 @@ export function Emotion3D({ emotion, size = 'md' }: Emotion3DProps) {
                     </svg>
                 )}
                 {emotion === '보통' && (
-                    <div className={`absolute ${mouthLineClass} bg-slate-800 rounded-full`} />
+                    <div className={`absolute ${mouthLineClass} bg-slate-800 rounded-full h-0.5`} />
                 )}
                 {emotion === '나쁨' && (
                     <svg className={`absolute ${mouthClass}`} viewBox="0 0 16 8">

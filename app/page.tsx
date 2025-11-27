@@ -165,7 +165,7 @@ export default function LandingPage() {
                 }`}
             >
               <button
-                onClick={() => router.push('/onboarding/guide')}
+                onClick={() => router.push('/onboarding')}
                 className="group relative flex h-16 min-w-[280px] cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 px-10 shadow-2xl shadow-blue-500/40 transition-all duration-150 hover:scale-[1.03] hover:shadow-blue-500/50 active:scale-[0.98]"
               >
                 {/* 배경 파동 애니메이션 - 좌우로 흐르는 그라데이션 */}

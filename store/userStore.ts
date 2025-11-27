@@ -4,32 +4,29 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 /**
  * 사용자 상태 관리 스토어
  * - userId: 백엔드 인증 후 받은 사용자 ID
- * - email: 사용자 이메일
- * - localStorage에 자동 저장되어 새로고침해도 유지됨
+ * - elderId: 현재 선택된 어르신 ID
  */
-
 interface UserState {
     userId: number | null;
-    email: string | null;
-
-    // Actions
-    setUser: (id: number, email: string) => void;
+    elderId: number | null;
+    setUser: (userId: number, email: string) => void;
+    setUserId: (userId: number) => void;
+    setElderId: (elderId: number) => void;
     clearUser: () => void;
 }
 
 export const useUserStore = create<UserState>()(
     persist(
         (set) => ({
-            // Initial state
             userId: null,
-            email: null,
-
-            // Actions
-            setUser: (id, email) => set({ userId: id, email }),
-            clearUser: () => set({ userId: null, email: null }),
+            elderId: null,
+            setUser: (userId, email) => set({ userId }),
+            setUserId: (userId) => set({ userId }),
+            setElderId: (elderId) => set({ elderId }),
+            clearUser: () => set({ userId: null, elderId: null }),
         }),
         {
-            name: 'sori-user-storage', // localStorage key 이름
+            name: 'user-storage',
             storage: createJSONStorage(() => localStorage),
         }
     )

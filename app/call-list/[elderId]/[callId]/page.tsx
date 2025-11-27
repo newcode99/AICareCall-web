@@ -1,48 +1,76 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { SoriCharacter } from '@/app/components/custom/SoriCharacter';
 import { Emotion3D } from '@/app/components/custom/Emotion3D';
+import { dashboardApi, CallDetailResponse } from '@/lib/api/dashboard';
 
-// Mock data
-const callData = {
-    id: '1',
-    date: '2023년 10월 27일',
-    time: '10:30 AM',
-    duration: '5분 32초',
-    status: '완료',
-    elderName: '김조차 님',
-    elderAge: 82,
-    relationship: '어머니',
-    aiSummary: '오늘 어르신께서는 기분이 매우 좋으셨으며, 아침과 점심 식사 및 복약 일정 모두 꼼꼼히 잘 챙기셨습니다. 다만 며칠 전부터 시작된 허리 통증이 여전히 지속되고 있어, 병원 방문을 권유드리는 등 보호자님의 각별한 주의가 필요해 보입니다.',
-    mealCheck: '오전/점심 식사완료',
-    medicationCheck: '복약 완료',
-    moodCheck: '좋음 상태',
-    emotionLevel: '좋음', // 좋음, 보통, 나쁨
-    tags: ['#식사2끼', '#기쁨', '#가족관심'],
-    conversation: [
-        { speaker: 'ai', text: '안녕하세요, 김조차 어르신! AI 케어콜입니다. 오늘 하루 어떻게 보내셨어요?' },
-        { speaker: 'elder', text: '네, 잘 지냈어. 아침도 먹고 점심도 먹고 날이 좋아서 기분도 좋네.' },
-        { speaker: 'ai', text: '다행이네요! 식사 잘 하시고 기분도 좋으시다니 저도 기쁩니다. 혹시 불편하신 곳 없으셨어요?' },
-        { speaker: 'elder', text: '허리가 계속 쑤셔. 아마 그것 때문에 어제도 그렇고 오늘도 그렇고.' },
-        { speaker: 'ai', text: '아이고, 허리 통증이 계속되시면 많이 힘드시겠어요. 혹 가족분들한테는 말씀 드리셨어요?' },
-        { speaker: 'elder', text: '아들한테는 얘기했어. 근데 바쁜 애라 신경 쓸 겨를이 없더라고.' },
-        { speaker: 'ai', text: '그러시군요. 통증이 계속되면 병원 가셔서 한 번 보시는 것도 좋을 것 같아요.' },
-        { speaker: 'elder', text: '파스는 붙였는데 별로 효과가 없어. 내일 한번 가볼까 생각중이야.' },
-        { speaker: 'ai', text: '네, 좋으신 생각이세요. 오늘 대화 잘하셨습니다. 건강하세요!' },
-    ]
-};
-
-export default function CallDetailPage({ params }: { params: { id: string } }) {
+export default function CallDetailPage() {
     const router = useRouter();
+    const params = useParams();
+    const elderId = params?.elderId as string;
+    const callId = params?.callId as string;
+
+    const [callData, setCallData] = useState<CallDetailResponse | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!callId) return;
+
+        async function fetchCallDetail() {
+            try {
+                setIsLoading(true);
+                const data = await dashboardApi.getCallDetail(parseInt(callId, 10));
+                setCallData(data);
+            } catch (err) {
+                console.error('통화 상세 조회 실패:', err);
+                setError(err instanceof Error ? err.message : '통화 상세를 불러올 수 없습니다.');
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchCallDetail();
+    }, [callId]);
+
+    // 로딩 상태
+    if (isLoading) {
+        return (
+            <div className="h-screen flex items-center justify-center bg-slate-50">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
+                    <p className="text-slate-500 font-medium">통화 상세를 불러오는 중...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // 에러 상태
+    if (error || !callData) {
+        return (
+            <div className="h-screen flex items-center justify-center bg-slate-50">
+                <div className="text-center">
+                    <p className="text-red-600 font-bold mb-4">{error || '데이터를 불러올 수 없습니다.'}</p>
+                    <button
+                        onClick={() => router.push(`/call-list/${elderId}`)}
+                        className="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-lg transition-colors"
+                    >
+                        목록으로 돌아가기
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="h-screen overflow-hidden bg-slate-50 flex flex-col">
+        <div className="h-screen w-full overflow-hidden bg-slate-50 flex flex-col">
             {/* Header */}
             <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center gap-3 flex-shrink-0">
                 <button
-                    onClick={() => router.back()}
+                    onClick={() => router.push(`/call-list/${elderId}`)}
                     className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5 text-slate-600" />
@@ -70,13 +98,15 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500 mb-2">대상</p>
-                                    <p className="text-sm font-bold text-slate-900 leading-snug">{callData.elderName} ({callData.elderAge}세, {callData.relationship})</p>
+                                    <p className="text-sm font-bold text-slate-900 leading-snug">{callData.elder_name}</p>
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500 mb-2">통화 상태</p>
                                     <div className="flex items-center gap-1.5">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                        <p className="text-sm font-bold text-emerald-700">{callData.status}</p>
+                                        <div className={`w-2 h-2 rounded-full ${callData.status === 'completed' ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
+                                        <p className={`text-sm font-bold ${callData.status === 'completed' ? 'text-emerald-700' : 'text-red-700'}`}>
+                                            {callData.status === 'completed' ? '완료' : '부재중'}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +116,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                         <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                             <h2 className="text-sm font-black text-slate-900 mb-4">상태 분석</h2>
                             <div className="grid grid-cols-3 gap-3">
-                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotionLevel === '좋음'
+                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotion === '좋음'
                                     ? 'bg-yellow-50 border-yellow-400 shadow-md'
                                     : 'bg-slate-50 border-slate-200'
                                     }`}>
@@ -95,7 +125,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                         <p className="text-xs font-black text-slate-900">좋음</p>
                                     </div>
                                 </div>
-                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotionLevel === '보통'
+                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotion === '보통'
                                     ? 'bg-blue-50 border-blue-400 shadow-md'
                                     : 'bg-slate-50 border-slate-200'
                                     }`}>
@@ -104,7 +134,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                         <p className="text-xs font-black text-slate-900">보통</p>
                                     </div>
                                 </div>
-                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotionLevel === '나쁨'
+                                <div className={`rounded-xl p-4 border-2 transition-all ${callData.emotion === '나쁨'
                                     ? 'bg-red-50 border-red-400 shadow-md'
                                     : 'bg-slate-50 border-slate-200'
                                     }`}>
@@ -129,7 +159,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-emerald-700">식사 여부</p>
-                                        <p className="text-sm font-black text-slate-900">{callData.mealCheck}</p>
+                                        <p className="text-sm font-black text-slate-900">-</p>
                                     </div>
                                 </div>
                                 {/* 2. 건강/복약 여부 */}
@@ -141,7 +171,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-emerald-700">건강/복약 여부</p>
-                                        <p className="text-sm font-black text-slate-900">{callData.medicationCheck}</p>
+                                        <p className="text-sm font-black text-slate-900">-</p>
                                     </div>
                                 </div>
                                 {/* 3. 기분 */}
@@ -153,7 +183,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-emerald-700">기분</p>
-                                        <p className="text-sm font-black text-slate-900">{callData.moodCheck}</p>
+                                        <p className="text-sm font-black text-slate-900">{callData.emotion || '-'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +210,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
 
                     {/* Right Panel */}
                     <div className="flex flex-col gap-4 overflow-hidden">
-                        {/* AI 요약 - 통화 기본 정보와 높이 일치 */}
+                        {/* AI 요약 */}
                         <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl border-2 border-violet-200 shadow-md flex-shrink-0" style={{ minHeight: '185px', padding: '20px' }}>
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
@@ -193,7 +223,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                             </div>
                             <div className="bg-white rounded-lg p-5 border border-violet-100 shadow-sm flex items-center justify-center" style={{ minHeight: '80px' }}>
                                 <p className="text-base text-slate-800 leading-relaxed font-medium" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                                    {callData.aiSummary}
+                                    {callData.summary}
                                 </p>
                             </div>
                         </div>
@@ -206,10 +236,10 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                             </div>
                             {/* 채팅창 박스 - 스크롤 가능 */}
                             <div className="flex-1 overflow-hidden p-4 bg-slate-50">
-                                <div className="h-full overflow-y-auto px-3 py-2 bg-gradient-to-br from-slate-100 via-white to-slate-50 rounded-lg border border-slate-200 shadow-inner space-y-4">
-                                    {callData.conversation.map((msg, i) => (
-                                        <div key={i} className={`flex ${msg.speaker === 'ai' ? 'justify-start' : 'justify-end'}`}>
-                                            {msg.speaker === 'ai' ? (
+                                <div className="h-full overflow-y-auto px-3 py-2 pb-6 bg-gradient-to-br from-slate-100 via-white to-slate-50 rounded-lg border border-slate-200 shadow-inner space-y-4">
+                                    {callData.messages.map((msg, i) => (
+                                        <div key={i} className={`flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}`}>
+                                            {msg.role === 'assistant' ? (
                                                 <div className="flex items-start gap-3 max-w-[75%]">
                                                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-md">
                                                         <SoriCharacter size={20} />
@@ -217,7 +247,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                                     <div>
                                                         <p className="text-sm font-bold text-slate-600 mb-1.5">소리</p>
                                                         <div className="bg-white rounded-2xl rounded-tl-none px-4 py-3 border border-slate-200 shadow-sm">
-                                                            <p className="text-sm font-medium text-slate-800 leading-relaxed">{msg.text}</p>
+                                                            <p className="text-sm font-medium text-slate-800 leading-relaxed">{msg.message}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -226,7 +256,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
                                                     <div>
                                                         <p className="text-sm font-bold text-violet-600 mb-1.5 text-right">어르신</p>
                                                         <div className="bg-gradient-to-r from-violet-500 to-purple-600 rounded-2xl rounded-tr-none px-4 py-3 shadow-lg">
-                                                            <p className="text-sm font-medium text-white leading-relaxed">{msg.text}</p>
+                                                            <p className="text-sm font-medium text-white leading-relaxed">{msg.message}</p>
                                                         </div>
                                                     </div>
                                                     <div className="w-9 h-9 rounded-full bg-slate-300 flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -247,3 +277,4 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
         </div>
     );
 }
+

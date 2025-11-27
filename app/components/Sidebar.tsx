@@ -20,18 +20,22 @@ export function Sidebar({ className }: SidebarProps) {
     const router = useRouter();
     const pathname = usePathname();
 
+    // URL에서 현재 elderId 추출 (dashboard 또는 call-list에서)
+    const currentElderId = pathname?.match(/\/(dashboard|call-list)\/(\d+)/)?.[2];
+    const dashboardPath = currentElderId ? `/dashboard/${currentElderId}` : '/dashboard';
+
     const navItems = [
         {
             id: 'dashboard',
             label: '대시보드',
             icon: LayoutDashboard,
-            path: '/dashboard',
+            path: dashboardPath,
         },
         {
             id: 'calls',
             label: '전체 통화 기록',
             icon: Phone,
-            path: '/call-history',
+            path: currentElderId ? `/call-list/${currentElderId}` : '/call-list',
         },
         {
             id: 'chat',
@@ -60,7 +64,7 @@ export function Sidebar({ className }: SidebarProps) {
             <div className="space-y-4 py-4">
                 <div className="px-6 py-2">
                     <button
-                        onClick={() => router.push('/dashboard')}
+                        onClick={() => router.push(dashboardPath)}
                         className="flex items-center gap-3 group"
                     >
                         <SoriLogo size={36} />
@@ -71,7 +75,7 @@ export function Sidebar({ className }: SidebarProps) {
                 </div>
                 <div className="px-3 py-2">
                     <div className="space-y-2">
-                        {navItems.map((item) => {
+                        {navItems.filter(item => item.id !== 'settings').map((item) => {
                             const isActive = pathname === item.path || pathname?.startsWith(item.path + '/');
                             return (
                                 <Button
