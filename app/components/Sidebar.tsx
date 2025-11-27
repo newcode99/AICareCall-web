@@ -20,12 +20,16 @@ export function Sidebar({ className }: SidebarProps) {
     const router = useRouter();
     const pathname = usePathname();
 
+    // URL에서 현재 elderId 추출
+    const currentElderId = pathname?.match(/\/dashboard\/(\d+)/)?.[1];
+    const dashboardPath = currentElderId ? `/dashboard/${currentElderId}` : '/dashboard';
+
     const navItems = [
         {
             id: 'dashboard',
             label: '대시보드',
             icon: LayoutDashboard,
-            path: '/dashboard',
+            path: dashboardPath,
         },
         {
             id: 'calls',
@@ -60,7 +64,7 @@ export function Sidebar({ className }: SidebarProps) {
             <div className="space-y-4 py-4">
                 <div className="px-6 py-2">
                     <button
-                        onClick={() => router.push('/dashboard')}
+                        onClick={() => router.push(dashboardPath)}
                         className="flex items-center gap-3 group"
                     >
                         <SoriLogo size={36} />
