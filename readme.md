@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/codyssey-PRISM/SoriAI/main/assets/sori-logo.png" alt="Sori AI Logo" width="200"/>
+<img src="C:/Users/User/.gemini/antigravity/brain/7e619232-1db6-4d72-ac2f-42027da27861/uploaded_image_1764330224923.png" alt="Sori AI" width="150"/>
 
 # Sori(소리) AI
 
@@ -99,15 +99,17 @@
 >
 > 현재 레포지토리는 전체 프로젝트의 문서화 및 아키텍처 설명을 위한 메인 README입니다.
 
-## 📢 **기획 의도: 침묵 속의 재난을 막다**
+## 💡 소개
 
-### **"혹시, 부모님의 목소리를 마지막으로 들은 게 언제인가요?"**
+### 📢 **기획 의도 (Project Background)**
+
+#### **"연결의 부재가 만드는 고립"**
 
 2025년 대한민국, 독거노인 200만명 시대.
 가족이 있어도 물리적 거리와 경제적 이유로 소통이 끊긴 **'관계의 빈곤'**은 단순한 외로움을 넘어 **고독사**라는 사회적 재난이 되었습니다.
 복지사 1명이 80명을 담당하는 현재의 시스템으로는, 이 침묵 속의 위기를 막을 수 없습니다.
 
-### **소리(Sori)의 해답: "기다리지 않고, 먼저 다가갑니다."**
+#### **소리(Sori)의 해답: "기다리지 않고, 먼저 다가갑니다."**
 우리는 앱을 켤 줄 모르는 어르신들에게 "사용법"을 가르치지 않습니다.
 그저 **가장 익숙한 '전화'**를 받으시기만 하면 됩니다.
 
@@ -116,27 +118,30 @@
 *   **Social Lifeline:** 통화가 연결되는 그 순간, 어르신은 세상과 연결되고 보호자는 안심을 얻습니다.
 *   
 
-## 🌊 **핵심 서비스 흐름 (Service Flow)**
+### 🌊 **핵심 서비스 흐름 (Service Flow)**
 
 <div align="center">
   <!-- 여기에 실제 서비스 플로우 이미지나 GIF를 넣으세요 -->
   <img src="https://via.placeholder.com/800x300/e0f2fe/1e3a8a?text=Sori+AI+Service+Flow" alt="Service Flow" />
 </div>
 
-### **1. The Personalizer (맞춤형 온보딩)**
+#### **1. The Personalizer (맞춤형 온보딩)**
 *   보호자가 부모님의 건강 정보(지병, 투약), 관심사, 성격을 입력합니다.
 *   소리는 이 데이터를 학습하여 **세상에 단 하나뿐인 '우리 부모님 전담 AI'**로 태어납니다.
 
-### **2. The Companion (정기 안부 통화)**
+#### **2. The Companion (정기 안부 통화)**
 *   **먼저 거는 전화:** 약속된 시간에 소리가 전화를 겁니다. (VoIP 기술 적용)
 *   **초저지연 대화:** 실제 사람과 대화하듯, 1.5초 이내에 반응하고 말 끊기도 자연스럽게 받아줍니다.
 *   **정서적 교감:** 단순 문답이 아닌, 감정을 어루만지는 따뜻한 대화를 나눕니다.
 
-### **3. Actionable Insight (실행형 리포트)**
+#### **3. Actionable Insight (실행형 리포트)**
 *   통화가 끝나자마자, 보호자에게 **'오늘의 리포트'**가 도착합니다.
 *   **3줄 요약:** 5분의 긴 통화도 핵심만 쏙 뽑아 보여줍니다.
 *   **감정 분석:** "오늘 기분이 좋아 보이세요" 혹은 "우울감이 감지되었습니다"를 알려줍니다.
 *   **건강 태그:** #두통 #식사거름 #수면부족 같은 건강 신호를 태그로 추출합니다.
+
+” 본 프로덕트/서비스는 실제 건강 상태나 투약 여부, 정서적 우울감을 객관적으로 파악하고,
+독거노인들의 '우울증과 사회적 고립을 방지하기 위해 기획/개발됨. “ 
 
 ---
 
@@ -239,39 +244,39 @@ Sori AI는 이러한 문제를 해결하기 위해 다음과 같은 솔루션을
 
 ## 🔄 서비스 주요 플로우
 
-### 1. 보호자 회원가입 및 온보딩 (Web)
+### 1. (보호자) 온보딩 화면
 
-![Onboarding Flow](https://via.placeholder.com/800x400?text=Onboarding+Flow)
+![onboarding](images/onboarding.gif)
 
-### 2. 어르신 앱 다운로드 및 초대코드 입력 (iOS)
+### 2. (보호자) 보호자 + 어르신 정보 입력 및 신청
 
-![iOS Setup](https://via.placeholder.com/800x400?text=iOS+Setup)
+![register](images/register.gif)
 
-### 3. AI 자동 통화 시스템
+### 3. (어르신) iOS앱 초대 코드 입력
 
-![AI Call](https://via.placeholder.com/800x400?text=AI+Call+Flow)
+<img width=250 src="images/iOS-invite-code.gif">
 
-### 4. 통화 분석 및 리포트 생성
+### 4. (어르신) 백엔드(스케줄러) 푸시 알림 발송 -> 통화 수락
 
-![Analysis](https://via.placeholder.com/800x400?text=Analysis+Flow)
+<img width=250 src="images/iOS-voip-push.gif">
 
-### 5. 보호자 대시보드에서 확인
+### 5. (보호자) 통화 종료 후 보호자 이메일로 리포트 전송 -> 대시보드
 
-![Dashboard](https://via.placeholder.com/800x400?text=Dashboard+View)
+![dashboard](images/dashboard.gif)
 
 ### 6. 기타
 
 #### 어르신 직접 통화 시도
 
-![Elder Direct Call](https://via.placeholder.com/800x400?text=Elder+Direct+Call)
+<img width=250 src="images/iOS-user-call.gif">
 
 #### 보호자 이메일 초대코드
 
-![Invite Code Email](https://via.placeholder.com/800x400?text=Invite+Code+Email)
+![invite-code](images/mail-invite-code.png)
 
 #### 보호자 이메일 리포트
 
-![Report Email](https://via.placeholder.com/800x400?text=Report+Email)
+![report](images/mail-report.png)
 
 ---
 
@@ -396,7 +401,40 @@ open AICareCall.xcodeproj
 
 ## 📁 프로젝트 구조
 
-### Backend (`AICareCall-server`)
+### Web (`AICareCall-web`)
+
+```
+app/
+├── (dashboard)/            # 대시보드 라우트 그룹
+│   ├── page.tsx           # 메인 대시보드
+│   ├── report/            # 리포트 페이지
+│   ├── settings/          # 설정 페이지
+│   └── chat/              # 채팅 페이지
+├── onboarding/             # 온보딩 5단계
+│   └── page.tsx
+├── register/               # 회원가입
+│   └── page.tsx
+├── components/             # 재사용 컴포넌트
+│   ├── Sidebar.tsx
+│   ├── LNB.tsx
+│   └── custom/            # 커스텀 컴포넌트
+components/
+├── onboarding/            # 온보딩 단계별 컴포넌트
+│   ├── Step1GuardianInfo.tsx
+│   ├── Step2ElderInfo.tsx
+│   ├── Step3CallSettings.tsx
+│   ├── Step4CallContent.tsx
+│   └── Step5Confirmation.tsx
+lib/
+├── api/                   # API 호출 함수
+│   ├── elder.ts
+│   ├── dashboard.ts
+│   └── convert.ts
+└── store/                 # Zustand 전역 상태
+    └── userStore.ts
+```
+
+### Server (`AICareCall-server`)
 
 ```
 app/
@@ -418,7 +456,7 @@ app/
 ├── services/               # 비즈니스 로직
 │   ├── apns.py           # APNs 푸시
 │   ├── auth.py           # 인증 코드 관리
-│   ├── email.py          # Gmail SMTP
+│   ├── email.py          # SendGrid 이메일
 │   └── elder.py
 └── routers/                # API 엔드포인트
     ├── auth.py           # /auth
@@ -427,6 +465,28 @@ app/
     ├── webhook.py        # /vapi/webhook
     └── health.py         # /, /health
 ```
+
+### iOS (`AICareCall-mobile`)
+
+```
+AICareCall/
+├── App/                    # 앱 진입점
+│   └── AICareCallApp.swift
+├── Features/               # TCA 기반 기능 모듈
+│   ├── Onboarding/        # 온보딩 (초대코드 입력)
+│   ├── Call/              # 통화 화면
+│   └── Settings/          # 설정
+├── Services/               # 서비스 레이어
+│   ├── VapiService.swift  # Vapi SDK 래퍼
+│   ├── APNsService.swift  # Push 처리
+│   └── CallKitService.swift # CallKit 관리
+├── Models/                 # 데이터 모델
+│   ├── Elder.swift
+│   └── CallSession.swift
+└── Dependencies/           # swift-dependencies
+    └── DependencyValues+.swift
+```
+
 
 ---
 
@@ -456,7 +516,7 @@ OpenAPI (Swagger) 문서: [https://aicarecall-server-production.up.railway.app/d
 
 <div align="center">
 
-**Made with ❤️ by Team PRISM**
+**Made with by Team PRISM**
 
 Codyssey AI 올인원 Term 프로젝트 | [Innovation Academy](https://innovationacademy.kr/)
 
