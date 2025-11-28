@@ -104,11 +104,12 @@
 ### 📢 **기획 의도 (Project Background)**
 
 #### **"연결의 부재가 만드는 고립"**
-
+### 배경
 2025년 대한민국, 독거노인 200만명 시대.
 가족이 있어도 물리적 거리와 경제적 이유로 소통이 끊긴 **'관계의 빈곤'**은 단순한 외로움을 넘어 **고독사**라는 사회적 재난이 되었습니다.
 복지사 1명이 80명을 담당하는 현재의 시스템으로는, 이 침묵 속의 위기를 막을 수 없습니다.
 
+### 해결 방안
 #### **소리(Sori)의 해답: "기다리지 않고, 먼저 다가갑니다."**
 우리는 앱을 켤 줄 모르는 어르신들에게 "사용법"을 가르치지 않습니다.
 그저 **가장 익숙한 '전화'**를 받으시기만 하면 됩니다.
@@ -116,7 +117,23 @@
 *   **Active Outbound:** 정해진 시간에 소리가 먼저 전화를 걸어 안부를 묻습니다.
 *   **Deep Connection:** "식사는 하셨나요?"를 넘어, "어제 무릎 아프신 건 좀 어떠세요?"라며 기억하고 공감합니다.
 *   **Social Lifeline:** 통화가 연결되는 그 순간, 어르신은 세상과 연결되고 보호자는 안심을 얻습니다.
-*   
+  
+- **전화라는 익숙한 UX 유지**: 어르신들이 가장 익숙한 전화 통화 방식 활용
+- **AI가 대신하는 일상적 안부 전화**: 보호자를 대신해 매일 정해진 시간에 AI가 자동으로 전화를 걸어 대화
+- **실시간 리포트 제공**: 통화 내용을 자동으로 요약하고 감정 분석하여 보호자에게 웹 대시보드로 제공
+- **이상 징후 조기 발견**: 평소와 다른 패턴이나 감정 상태 변화를 감지하여 보호자에게 알림
+
+### 핵심 가치
+
+**어르신**  
+매일 정해진 시간에 "누군가 나를 챙겨준다"는 따뜻한 경험
+
+**보호자**  
+"오늘도 부모님이 잘 계신다"는 안심을 한눈에 확인
+
+**사회**  
+독거 어르신의 고독사 예방과 웰빙 향상에 기여
+   
 
 ### 🌊 **핵심 서비스 흐름 (Service Flow)**
 
@@ -185,14 +202,14 @@ Sori AI는 이러한 문제를 해결하기 위해 다음과 같은 솔루션을
 ![Next.js](https://img.shields.io/badge/Next.js_15-black?style=flat&logo=next.js)
 ![React](https://img.shields.io/badge/React_19-61DAFB?style=flat&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![Shadcn](https://img.shields.io/badge/Shadcn-black?style=flat)
 ![Zustand](https://img.shields.io/badge/Zustand-443E38?style=flat)
 
-- **프레임워크**: Next.js 15 (App Router)
-- **UI 라이브러리**: React 19
-- **상태 관리**: Zustand
-- **스타일링**: Tailwind CSS + shadcn/ui  
-- **차트**: Recharts
+- **프레임워크**: Next.js / React (App Router 기반 SSR)
+- **언어**: TypeScript (타입 안정성)
+- **스타일링**: Tailwind CSS + Shadcn (유틸리티 퍼스트 CSS + 재사용 컴포넌트)
+- **상태 관리**: Zustand (경량 전역 상태 관리)
 
 ### Backend (API Server)
 
@@ -200,37 +217,31 @@ Sori AI는 이러한 문제를 해결하기 위해 다음과 같은 솔루션을
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat)
-![Alembic](https://img.shields.io/badge/Alembic-6BA81E?style=flat)
+![APScheduler](https://img.shields.io/badge/APScheduler-green?style=flat)
+![Vapi](https://img.shields.io/badge/Vapi_Server_SDK-9333EA?style=flat)
+![SendGrid](https://img.shields.io/badge/SendGrid-0080FF?style=flat)
 
-- **프레임워크**: Python / FastAPI (비동기 처리)
-- **ORM**: SQLAlchemy (Async)
-- **마이그레이션**: Alembic
-- **데이터베이스**: PostgreSQL
-- **스케줄러**: APScheduler
-- **인증**: JWT
+- **프레임워크**: Python / FastAPI (비동기 고성능 API 서버)
+- **데이터베이스**: SQLAlchemy + PostgreSQL (비동기 ORM + 관계형 DB)
+- **푸시 알림**: APNs (HTTP/2) - iOS VoIP 푸시
+- **스케줄러**: APScheduler (자동 통화 예약 시스템)
+- **AI 음성**: Vapi Server SDK (AI 음성 통화 연동)
+- **이메일**: SendGrid (인증 코드 발송)
 
 ### Mobile (iOS - 어르신용)
 
 ![Swift](https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-0066CC?style=flat)
-![Combine](https://img.shields.io/badge/Combine-FA7343?style=flat)
+![TCA](https://img.shields.io/badge/TCA-orange?style=flat)
+![CallKit](https://img.shields.io/badge/CallKit-black?style=flat&logo=apple)
+![PushKit](https://img.shields.io/badge/PushKit-black?style=flat&logo=apple)
+![Vapi](https://img.shields.io/badge/Vapi_iOS_SDK-9333EA?style=flat)
 
-- **프레임워크**: SwiftUI
-- **비동기**: Combine
-- **통화 UI**: CallKit (실제 전화와 동일한 UX)
-- **푸시**: PushKit (VoIP)
-
-### External Services
-
-![Vapi.ai](https://img.shields.io/badge/Vapi.ai-9333EA?style=flat)
-![OpenAI](https://img.shields.io/badge/GPT--4o-412991?style=flat&logo=openai)
-![APNs](https://img.shields.io/badge/APNs-000000?style=flat&logo=apple)
-![Resend](https://img.shields.io/badge/Resend-000000?style=flat)
-
-- **AI 통화**: Vapi.ai (STT-LLM-TTS 통합 파이프라인)
-- **LLM**: OpenAI GPT-4o
-- **푸시**: Apple Push Notification Service (APNs)
-- **이메일**: SendGrid
+- **프레임워크**: Swift / SwiftUI (네이티브 iOS 개발)
+- **아키텍처**: TCA (The Composable Architecture - 단방향)
+- **통화 시스템**: CallKit / PushKit (시스템 전화 UI + VoIP 푸시 수신)
+- **AI 음성**: Vapi iOS SDK (AI 음성 통화 클라이언트)
+- **의존성 관리**: swift-dependencies (테스트 가능한 의존성 주입)
 
 ### Infrastructure
 
