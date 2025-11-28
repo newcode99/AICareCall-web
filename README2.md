@@ -128,8 +128,8 @@
 독거 어르신의 고독사 예방과 웰빙 향상에 기여
 AI가 1차 스크리닝, 인간은 위험군에 집중.  
 
-### 🌊 **핵심 서비스 흐름 (Service Flow)**
 
+## 🌊 **핵심 서비스 흐름 (Service Flow)**
 <div align="center">
   <!-- 여기에 실제 서비스 플로우 이미지나 GIF를 넣으세요 -->
   <img src="https://via.placeholder.com/800x300/e0f2fe/1e3a8a?text=Sori+AI+Service+Flow" alt="Service Flow" />
