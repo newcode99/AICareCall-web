@@ -1,16 +1,3 @@
-
-### **[1단계] 로고 파일 자산화 처리**
-먼저, 제공해주신 SVG 코드를 프로젝트 내 실제 파일로 저장하여 README에서 바로 불러올 수 있게 조치합니다. (인터넷에 올릴 필요 없이 로컬 상대 경로로 연결하는 것이 정석입니다.)
-
-[2 tools called]
-
-### **[2단계] High-End README.md 설계 및 작성**
-
-벤치마킹한 `Hack-1st` 및 Top-tier 레포지토리들의 핵심 요소(배지, 아키텍처, 시각화 테이블, 명확한 설치 가이드)를 모두 반영하여, **Sori AI**의 기술적 깊이와 사회적 가치를 동시에 보여주는 완성형 README입니다.
-
-바로 복사해서 사용하시면 됩니다.
-
-```markdown
 <div align="center">
   <img src="sori-ai/public/assets/sori-logo.svg" alt="Sori AI Logo" width="140" height="140" />
   <h1>Sori AI (소리)</h1>
