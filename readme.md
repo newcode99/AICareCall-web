@@ -8,8 +8,8 @@
   <p>
     <b>소리(Sori)</b>는 단순한 AI가 아닙니다.<br/>
     단절된 이들에게 <b>먼저 손을 내밀고(Active Outbound)</b>,<br/>
-    그들의 목소리에서 <b>삶의 신호를 감지(Data-Driven Care)</b>하는<br/>
-    <b>세상에서 가장 따뜻한 목소리로 단절된 마음을 </b>잇다.
+    그들의 목소리에서 <b>삶의 신호를 감지(Data-Driven Care)</b>합니다.<br/>
+    <b>' 세상에서 가장 따뜻한 목소리로 단절된 마음을 </b>잇다. '
 
 [🌐 Live Demo](https://sori-ai.vercel.app/) • [📚 API Docs](https://aicarecall-server-production.up.railway.app/docs) • [📖 Tech Specs](#️-시스템-아키텍처)
 
