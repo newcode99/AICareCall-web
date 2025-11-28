@@ -1,4 +1,4 @@
-```markdown
+
 # Sori AI (소리)
 
 <div align="center">
