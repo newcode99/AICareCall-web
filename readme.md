@@ -34,40 +34,68 @@
 - **개발 기간**: 11/10(월) - 11/28(금) (약 3주)
 - **프로젝트 규모**: 풀스택 3개 플랫폼 (iOS + Web + Server)
 - **팀 구성**: 4명 (프론트엔드, 백엔드, iOS, 풀스택)
-- **주최**: [이노베이션 아카데미 - Codyssey](https://innovationacademy.kr/)
-
----
+- **주최**: 이노베이션 아카데미 - Codyssey
 
 ## 👥 팀원
 
-[@jaylovegood](https://github.com/jaylovegood)  
-[@stevenkim18](https://github.com/stevenkim18)  
-[@newcode99](https://github.com/newcode99)  
-[@x0cloud69](https://github.com/x0cloud69)
-
----
+<table>
+<tr>
+<td align="center" width="25%">
+<a href="https://github.com/jaylovegood">
+<img src="https://github.com/jaylovegood.png" width="100px;" alt="jaylovegood"/><br />
+<sub><b>@jaylovegood</b></sub>
+</a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/stevenkim18">
+<img src="https://github.com/stevenkim18.png" width="100px;" alt="stevenkim18"/><br />
+<sub><b>@stevenkim18</b></sub>
+</a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/newcode99">
+<img src="https://github.com/newcode99.png" width="100px;" alt="newcode99"/><br />
+<sub><b>@newcode99</b></sub>
+</a>
+</td>
+<td align="center" width="25%">
+<a href="https://github.com/x0cloud69">
+<img src="https://github.com/x0cloud69.png" width="100px;" alt="x0cloud69"/><br />
+<sub><b>@x0cloud69</b></sub>
+</a>
+</td>
+</tr>
+</table>
 
 ## 🔗 링크들
 
-[🌐 sori-ai.vercel.app](https://sori-ai.vercel.app/)  
-[📚 API Docs](https://aicarecall-server-production.up.railway.app/docs)
-
-> [!NOTE]
-> **📱 iOS 앱 배포 상태**  
-> iOS 앱은 애플 앱스토어 심사 절차가 진행 중입니다. 심사 승인 후 곧 다운로드 가능하도록 준비하고 있습니다!  
-> 테스트하고 싶으신 분은 아래 GitHub 소스 코드를 다운 받아 Xcode에서 실행하실 수 있습니다.
-
-[💻 GitHub - Web](https://github.com/codyssey-PRISM/AICareCall-web)  
-[🖥️ GitHub - Server](https://github.com/codyssey-PRISM/AICareCall-server)  
-[📱 GitHub - iOS](https://github.com/codyssey-PRISM/AICareCall-mobile)
-
-> [!IMPORTANT]
-> **💡 각 플랫폼의 전체 소스 코드는 위의 GitHub Repository 링크를 통해 확인하실 수 있습니다!**  
-> 현재 레포지토리는 전체 프로젝트의 문서화 및 아키텍처 설명을 위한 메인 README입니다.
+| 🌐 서비스         | 설명                                             | URL                                                                  | 배포                                                                                                   |
+| ----------------- | ------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Web Dashboard** | 보호자용 대시보드 (통화 리포트, 통계, 일정 관리) | [sori-ai.vercel.app](https://sori-ai.vercel.app/)                    | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)    |
+| **API Server**    | FastAPI 기반 백엔드 (Swagger 문서)               | [API Docs](https://aicarecall-server-production.up.railway.app/docs) | ![Railway](https://img.shields.io/badge/Railway-0B0D0E?style=flat-square&logo=railway&logoColor=white) |
 
 ---
 
-## 💡 소개
+> [!NOTE]
+> 📱 **iOS 앱 배포 상태**
+>
+> iOS 앱은 애플 앱스토어 심사 절차가 진행 중입니다. 심사 승인 후 곧 다운로드 가능하도록 준비하고 있습니다!
+>
+> 테스트하고 싶으신 분은 아래 Github 소스 코드를 다운 받아 Xcode에서 실행하실 수 있습니다.
+
+| 📦 Repository | 주요 기술 스택                   | 설명                                      | 링크                                                          |
+| ------------- | -------------------------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| **Web**       | Next.js, TypeScript, TailwindCss | 보호자용 웹 대시보드 프론트엔드           | [GitHub](https://github.com/codyssey-PRISM/AICareCall-web)    |
+| **Server**    | FastAPI, PostgreSQL, APScheduler | AI 통화 스케줄링 및 APNs 푸시 백엔드      | [GitHub](https://github.com/codyssey-PRISM/AICareCall-server) |
+| **iOS**       | Swift, SwiftUI, TCA              | 어르신용 AI 통화 iOS 앱 (CallKit/PushKit) | [GitHub](https://github.com/codyssey-PRISM/AICareCall-mobile) |
+
+---
+
+> [!IMPORTANT]
+> 💡 **각 플랫폼의 전체 소스 코드는 위의 GitHub Repository 링크를 통해 확인하실 수 있습니다!**
+>
+> 현재 레포지토리는 전체 프로젝트의 문서화 및 아키텍처 설명을 위한 메인 README입니다.
+
 
 **Sori AI는 독거 어르신의 일상적 안부를 AI가 자동으로 확인하는 플랫폼입니다.**
 
