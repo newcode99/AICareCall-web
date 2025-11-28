@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/sori-logo.png alt="Sori AI" width="150"/>
+<img src="public/sori-logo.png"/>
 
 # Sori(소리) AI
 
